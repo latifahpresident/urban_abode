@@ -71,7 +71,7 @@ const Header = () => {
                         <button className='pl-4' onClick={handleToggle}><Icon iconName={toggle ? faX : faBars} className="text-darkGreen"/></button>
                         <Search/>
                         <div className='uppercase text-sm sm:text-3xl font-bold tracking-widest flex flex-col text-cream sm:w-72 items-end sm:items-center justify-between pr-4 sm:p-0 animate-fade-in-down'>Urban Abode <br/> <span className='text-xs self-center'>furniture</span></div>
-                        <div className='hidden lg:block w-32 flex justify-between items-center text-indigo-600'>
+                        <div className='hidden lg:flex w-32 flex justify-between items-center'>
                             <Link to={`/profile`}>
                                     <Icon iconName={faUser} className={iconClassNames}/>
                             </Link>
