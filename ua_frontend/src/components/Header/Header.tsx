@@ -68,7 +68,7 @@ const Header = () => {
             <div className='z-50 absolute w-full  transition ease-in-out duration-300 delay-500'> 
                 <header className='w-full p-0 lg:px-14 py-2 sm:py-6 max-w-full relative mb-4'>
                     <div className='flex justify-between align-center box-border'>
-                        <button className='pl-4' onClick={handleToggle}><Icon iconName={toggle ? faX : faBars} className="text-darkGreen"/></button>
+                        <button className='pl-4 lg:hidden' onClick={handleToggle}><Icon iconName={toggle ? faX : faBars} className="text-darkGreen"/></button>
                         <Search/>
                         <div className='uppercase text-sm sm:text-3xl font-bold tracking-widest flex flex-col text-cream sm:w-72 items-end sm:items-center justify-between pr-4 sm:p-0 animate-fade-in-down'>Urban Abode <br/> <span className='text-xs self-center'>furniture</span></div>
                         <div className='hidden lg:flex w-32 flex justify-between items-center'>
