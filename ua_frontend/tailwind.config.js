@@ -6,11 +6,14 @@ module.exports = {
   theme: {
     colors: {
       yellowAccent: '#E2C77E',
-      darkGreen: '#3B3122',
+      darkGreen: '#494f40',
       cream: '#F0EEE4',
       lightBrown: '#AF7752',
       darkBrown: '#865432',
       redBrown: '#BA7756',
+      transParentGray: '#9b9ea396',
+      transparentGreen: '#494f407d',
+      creamAccent: '#f8e2ba'
 
     },
     extend: {
@@ -43,9 +46,6 @@ module.exports = {
         }
       }
     }
-     
-    
-   
   },
   plugins: [],
 }

@@ -4,7 +4,7 @@ interface ParagraphProps {
 }
 const ParagraphBold = ({children, className}: ParagraphProps) => {
     return (
-        <p className={`font-bold text-m ${className}`}>
+        <p className={`font-bold text-lg text-darkGreen ${className}`}>
             {children}
         </p>
     )
