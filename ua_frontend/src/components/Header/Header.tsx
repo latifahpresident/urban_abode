@@ -66,9 +66,10 @@ const Header = () => {
         setToggle(!toggle)
     }
 
+    //TODO: IMPROVE NAVIGATION CONDITIONAL STYLING
     return (
         <>
-            <div className={`z-50 absolute w-full  transition ease-in-out duration-300 delay-500 ${isHome != '/' ? 'bg-darkGreen' : 'bg-transparent'}`}> 
+            <div className={`z-50 absolute w-full  transition ease-in-out duration-300 delay-500 ${isHome != '/' ? 'bg-darkGreen' : ''}`}> 
                 <header className='w-full p-0 lg:px-14 py-2 sm:py-6 max-w-full relative mb-4'>
                     <div className='flex justify-between align-center box-border'>
                         <button className='pl-4 lg:hidden' onClick={handleToggle}><Icon iconName={toggle ? faX : faBars} className="text-darkGreen"/></button>
