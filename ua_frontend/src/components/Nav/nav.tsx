@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-// import SideBar from './SideBar/SideBar';
+import { useLocation } from 'react-router-dom';
 
 interface Item  {
     name: string
@@ -11,9 +11,11 @@ interface LinkProps {
 }
 
 const Nav = ({links}: LinkProps) => {
+    const location = useLocation()
+    const isHome = location.pathname
     return (
         <>
-            <nav className='hidden lg:block w-full h-16'>
+            <nav className={`hidden lg:block w-full h-16 ${isHome != '/' ? 'bg-darkGreen' : 'bg-transparent'}`}>
                 <ul className='flex justify-evenly items-center relative h-full'>
                     {links.map((link, key) => (
                         <li key={key} className='text-yellowAccent uppercase text-sm cursor-pointer'>
@@ -22,7 +24,6 @@ const Nav = ({links}: LinkProps) => {
                     ))}
                 </ul>
             </nav>
-            {/* <SideBar links={links}/> */}
         </>
     )
 }

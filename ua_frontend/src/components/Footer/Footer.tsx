@@ -22,7 +22,6 @@ const footerCat: FooterLinks[] = [
 ]
 
 const Footer = () => {
-
     
     return (
         <footer className='bg-darkGreen w-full h-16 flex items-center'>
