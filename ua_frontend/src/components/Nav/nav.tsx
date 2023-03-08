@@ -15,7 +15,7 @@ const Nav = ({links}: LinkProps) => {
     const isHome = location.pathname
     return (
         <>
-            <nav className={`hidden lg:block w-full h-16 ${isHome != '/' ? 'bg-darkGreen' : 'bg-transparent'}`}>
+            <nav className={`hidden lg:block w-full h-16 ${isHome !== '/' ? 'bg-darkGreen' : 'bg-transparent'}`}>
                 <ul className='flex justify-evenly items-center relative h-full'>
                     {links.map((link, key) => (
                         <li key={key} className='text-yellowAccent uppercase text-sm cursor-pointer'>

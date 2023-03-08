@@ -58,9 +58,6 @@ const Carousel = ({ category, show } : CarouselProps) => {
 
     const getTranslateValue = () => {
         let translateValue
-        // if (windowSize >= 1713) {
-        //     translateValue = currentIndex * 23.3
-        //  }
          if (windowSize >= 1536) {
             translateValue = currentIndex * 23.3
          }
