@@ -20,7 +20,7 @@ const HomeLayout = () => {
     // }
 
     return (
-        <main className='h-screen'>
+        <main>
             <div className='h-auto w-full'>
                 <img src={Hero} alt='Urban Abode Hero' className='w-full'/>
             </div>
@@ -47,7 +47,7 @@ const HomeLayout = () => {
                     <img className='w-full h-full' src={Decor} alt="decore"/>
                 </div>
                 <div className='h-60 lg:h-full bg-darkGreen w-full xl:w-1/2 flex lg:justify-center items-center text-2xl'>
-                    <div className='flex items-start pl-4 lg:pl-0 lg:items-center justify-between  flex-col h-3/5 lg:h-64'>
+                    <div className='flex pl-4 lg:pl-0 items-center sm:items-start md:items-center  justify-between  flex-col h-3/5 lg:h-64'>
                         <h1 className='text-cream w-9/12 text-md lg:text-4xl  2xl:text-6xl leading-none mb-2 lg:mb-10'>Elevate your space: Mix and match decore <span className='hidden lg:block'>for contrasting shapes and finishes</span></h1>
                         <Button color='cream' title='Shop Now' className='border border-cream' iconClassName='text-yellowAccent' icon={true} iconName={faArrowRight}/>
                     </div>
@@ -58,12 +58,12 @@ const HomeLayout = () => {
                 <Carousel category={topPicks} show={true}/>
              </div>
 
-             <div className='flex flex-col lg:h-[33rem] xl:h-[60rem] lg:flex-row my-16 lg:my-32'>
+             <div className='flex flex-col lg:h-[33rem] xl:h-[60rem] lg:flex-row my-16 lg:mt-32 mb-0'>
                 <div className='w-full h-80  sm:h-full xl:w-1/2'>
                     <img className='w-full h-full' src={Kids} alt="decore"/>
                 </div>
                 <div className='h-60 lg:h-full bg-creamAccent w-full xl:w-1/2 flex lg:justify-center items-center text-2xl'>
-                    <div className='flex items-start pl-4 lg:pl-0 lg:items-center justify-between  flex-col h-3/5 lg:h-64'>
+                    <div className='flex pl-4 lg:pl-0 items-center sm:items-start md:items-center justify-between  flex-col h-3/5 lg:h-64'>
                         <h1 className='text-darkGreen w-9/12 text-md lg:text-7xl leading-none mb-2 lg:mb-10'>Check out our pint size deals!</h1>
                         <Button color='darkGreen' title='Shop Now' className='border border-darkGreen' iconClassName='text-darkGreen' icon={true} iconName={faArrowRight}/>
                     </div>

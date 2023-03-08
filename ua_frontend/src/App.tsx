@@ -1,6 +1,6 @@
 import Header from './components/Header/Header';
-// import Nav from './components/Nav/nav'
 import Home from './pages/Home/HomeLayout';
+import Footer from './components/Footer/Footer';
 import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
@@ -12,8 +12,8 @@ const App = () => {
   return (
     <>
       <Header/>
-      {/* <Nav/> */}
-      {routes}
+        {routes}
+      <Footer/>
     </>
     
   );
