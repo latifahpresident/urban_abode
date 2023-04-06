@@ -23,5 +23,5 @@ addProduct = (prod) => {
 module.exports = {
     allProducts,
     getProductsByCategory,
-    addProduct,
+    addProducts,
 }
