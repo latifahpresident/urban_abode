@@ -3,7 +3,7 @@ import { uiActions } from '../../ui';
 import axios from './../../../util/axiosInstance';
 import { Dispatch } from 'redux';
 
-export const getProducts =  () => {
+export const getProducts =  (category: string) => {
     return async (dispatch: Dispatch) => {
         dispatch(
             uiActions.showNotification({
@@ -13,13 +13,13 @@ export const getProducts =  () => {
             }) 
          )
         const getData = async () => {
-            const response = await axios.get('/')
+            const response = await axios.get(`/products/?category=${category}`)
 
             if(response.status !== 200) {
                 throw new Error(response.data.message)
             }
 
-            const data = response.data
+            const data = response.data.products
             return data
         }
 
