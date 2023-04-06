@@ -65,11 +65,11 @@ const Header = () => {
     const handleToggle = () => {
         setToggle(!toggle)
     }
-
     //TODO: IMPROVE NAVIGATION CONDITIONAL STYLING
+    //TODO: REMOVE HREF FROM THE LINKS ARRAY. WE WANT TO SEND THE CATEGORY TO THE BACKEND WITH A SPACE.
     return (
         <>
-            <div className={`z-50 absolute w-full  transition ease-in-out duration-300 delay-500 ${isHome !== '/' ? 'bg-darkGreen' : ''}`}> 
+            <div className={`z-50 absolute w-full  transition ease-in-out duration-300 delay-500 ${isHome !== '/' ? 'bg-darkGreen relative' : ''}`}> 
                 <header className='w-full p-0 lg:px-14 py-2 sm:py-6 max-w-full relative mb-4'>
                     <div className='flex justify-between align-center box-border'>
                         <button className='pl-4 lg:hidden' onClick={handleToggle}><Icon iconName={toggle ? faX : faBars} className="text-darkGreen"/></button>

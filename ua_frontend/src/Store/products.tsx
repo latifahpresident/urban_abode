@@ -4,19 +4,19 @@ interface Colors {
     color_name: string
 }
 
-interface Images {
-    url: string
-}
+// interface Images {
+//     url: string
+// }
 export interface Products {
     id?: number
-    name: string
+    title: string
     description: string
     price: number
     category: string
     quanity: number
     outOfStock: boolean
     colors?: Colors[]
-    images?: Images[]
+    images: string
 }
 
 
