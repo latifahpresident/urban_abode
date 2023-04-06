@@ -1,4 +1,3 @@
-const Pool = require("pg").Pool;
 require('dotenv').config()
 
 // Update with your config settings.
@@ -6,7 +5,7 @@ require('dotenv').config()
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-const pool = new Pool( {
+module.exports = {
 
   development: {
     client: 'pg',
@@ -41,9 +40,11 @@ const pool = new Pool( {
 
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
+    connection: {
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      }
     },
     pool: {
       min: 2,
@@ -54,6 +55,4 @@ const pool = new Pool( {
     }
   }
 
-})
-
-module.exports = pool
+};
