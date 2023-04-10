@@ -1,22 +1,15 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface Colors {
-    color_name: string
-}
-
-// interface Images {
-//     url: string
-// }
 export interface Products {
-    id?: number
+    id: number
     title: string
     description: string
     price: number
-    category: string
-    quanity: number
+    category_name: string
+    quantity: number
     outOfStock: boolean
-    colors?: Colors[]
-    images: string
+    colors: string[]
+    images: string[]
 }
 
 
@@ -62,6 +55,9 @@ const productSlice = createSlice({
             
         // },
         getProductsData(state, action: PayloadAction<Products[]>) {
+            state.products = action.payload
+        },
+        getProductData(state, action: PayloadAction<Products[]>) {
             state.products = action.payload
         },
     }

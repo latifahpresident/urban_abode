@@ -59,4 +59,5 @@ export const topPicks: CategoryProps[] = [
         title: 'Pillows',
         href: '/pillows'
     },
+
 ]
