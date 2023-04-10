@@ -16,27 +16,25 @@ exports.getProducts = async (req, res) => {
 
 exports.getProductsByCategory = async (req, res) => {
     try {
-        const { category } = req.query;
+        const { category } = req.params;
 
         if (category === 'all') {
             const productsData = await Products.allProducts();
             res.status(200).json({products: productsData} )
             res.end()
         } else {
-            console.log('category', category)
 
             const productsData = await Products.getProductsByCategory(category);
-            console.log('productsData', productsData)
             if(!productsData || productsData.length === 0) {
                 res.status(400).json({message: `No products found.`})
             } else {
                 res.status(200).json({products: productsData})
                 res.end()
             }
-        }
+       }
 
     } catch(error) {
-        res.status(500).json({message: `There was an error retrieving the products ${error}`})
+        res.status(500).json({message: `There was an error retrieving the products from that category ${error.message}`})
     }
 };
 
@@ -60,4 +58,18 @@ exports.addProduct = async (req, res) => {
     
         }
     }
-}
+};
+
+exports.getProductById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Products.productById(id)
+        if(!product) {
+            res.status(404).json({message: `We couldn't find that product`});
+        } else {
+            res.status(200).json({product: product});
+        } 
+    } catch (error) {
+        res.status(500).json({message: `There was an error retrieving that product ${error}`})
+    }
+};

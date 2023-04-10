@@ -2,19 +2,18 @@ import { useEffect } from 'react';
 import {useAppDispatch, useAppSelector } from '../../util/app/hooks'
 import { getProducts } from '../../Store/Actions/Products/Products';
 import { ProductsList } from './Products';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export const Products = () => {
    const dispatch = useAppDispatch()
-   const [searchParams] = useSearchParams()
+   const {category} = useParams()
    const products = useAppSelector(state => state.products.products)
-   const params =  searchParams.get('category')
 
    useEffect(() => {
-       dispatch(getProducts(params || 'all'))
-   }, [dispatch, params])
+       dispatch(getProducts(category || 'all'))
+   }, [dispatch, category])
    
-   console.log("params******", params)
+   console.log("params******", category)
 
    return (
        <ProductsList products={products}/>

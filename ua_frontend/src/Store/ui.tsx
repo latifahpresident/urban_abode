@@ -6,6 +6,7 @@ interface NotificationProps {
     status: string
     title: string
     message: string
+    loading: Boolean
 }
 
 export interface InitialStateProps  {
@@ -16,7 +17,8 @@ const initialState : InitialStateProps = {
     notification: {
         status: '',
         title: '',
-        message: ''
+        message: '',
+        loading: false
     }
 }
 
@@ -29,7 +31,8 @@ const uiSlice = createSlice({
             state.notification = {
                 status: action.payload.status,
                 title: action.payload.title,
-                message: action.payload.title
+                message: action.payload.title,
+                loading: action.payload.loading
             }
         }
        

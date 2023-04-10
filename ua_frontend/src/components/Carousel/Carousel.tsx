@@ -75,8 +75,8 @@ const Carousel = ({ category, show } : CarouselProps) => {
     return (
         <div {...handlers} className={`${show ? 'block' : 'xl:hidden'} overflow-hidden my-8 relative`}>
             <button onClick={next} className={ `hidden text-yellowAccent text-5xl absolute translate-y-2/4 right-6 2xl:right-1 rounded-full bg-transparentGreen p-0.5 top-[40%] z-10 w-fit  ${currentIndex === 2 ? 'hidden' : 'lg:flex'}`}>
-                    <Icon iconName={faChevronRight}/>
-                </button>
+                <Icon iconName={faChevronRight}/>
+            </button>
             <div className='whitespace-nowrap transition-transform relative' style={{ transform:`translateX(-${getTranslateValue()}%)`, transition: "transform .6s"}}>                
                 {category.map((cat, key) => (
                     <div key={key} className='inline-flex items-center justify-center h-96 w-5/6 sm:w-4/6 m-1 lg:m-4 lg:w-96'>
