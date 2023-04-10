@@ -24,7 +24,7 @@
     "noUnusedParameters": true, // Report errors on unused parameters
     "incremental": true, // Enable incremental compilation by reading/writing information from prior compilations to a file on disk
     "noFallthroughCasesInSwitch": true,  // Report errors for fallthrough cases in switch statement
-    "types": [ "node", "@types/jest"],
+    "types": [ "node"],
     "typeRoots": [ "./node_modules/@types" ]
   },
   "include": [
