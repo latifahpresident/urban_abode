@@ -4,6 +4,7 @@
 # API Documentation
 
 #### Backend deployed at [heroku](https://urban-abode.herokuapp.com/) <br>
+#### Frontend deployed at [Vercel](https://urban-abode.vercel.app/) <br>
 
 ## 1️⃣ Getting started
 
