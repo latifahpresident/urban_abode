@@ -15,7 +15,8 @@ module.exports = {
       transparentGreen: '#494f407d',
       creamAccent: '#f8e2ba',
       redAccent: '#AF1A30',
-      whiteAccent: '#FFFFFF'
+      whiteAccent: '#FFFFFF',
+      lightGray: '#F4F4F4'
 
     },
     extend: {

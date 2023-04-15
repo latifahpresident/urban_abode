@@ -20,7 +20,7 @@ const Nav = ({links}: LinkProps) => {
                 <ul className='flex justify-evenly items-center relative h-full'>
                     {links.map((link, key) => (
                         <li key={key} className='text-yellowAccent uppercase text-sm cursor-pointer'>
-                            <NavLink to={`products/?category=${link.name}`}>{link.name}</NavLink>
+                            <NavLink to={`${link.href}`}>{link.name}</NavLink>
                         </li>
                     ))}
                 </ul>
