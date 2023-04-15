@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.table('products', products => {
-    products.string('category_name').references('name').inTable('category').onUpdate('CASCADE').onDelete('CASCADE').notNullable();
+    products.string('category_name').references('name').inTable('category').onUpdate('CASCADE').onDelete('CASCADE');
   })
 };
 

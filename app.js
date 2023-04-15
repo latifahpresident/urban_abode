@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 
 const productRoutes = require('./ua_backend/routes/products');
+const userRoutes = require('./ua_backend/routes/users');
 
 const app = express();
 app.use(express.json());
@@ -17,5 +18,7 @@ app.use(function(req, res, next) {
     next();
 });
 app.get('/sanity', (req, res) => {res.send('********sanity check********')});
-app.use('/', productRoutes)
+app.use('/', productRoutes);
+app.use('/users', userRoutes);
+
 module.exports = app
