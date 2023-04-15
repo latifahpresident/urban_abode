@@ -27,7 +27,7 @@ Node/Express js
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-    *  DEV_DATABASE - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  STRIPE_SECRET - this is generated in the Stripe dashboard
+    -  DEV_DATABASE - optional development db for using functionality not available in SQLite
+    -  NODE_ENV - set to "development" until ready for "production"
+    -  SENDGRID_API_KEY - this is generated in your Sendgrid account
+    -  STRIPE_SECRET - this is generated in the Stripe dashboard
