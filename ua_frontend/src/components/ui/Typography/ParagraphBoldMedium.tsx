@@ -5,7 +5,7 @@ interface ParagraphProps {
 
 const ParagraphMediumBold =  ({children, className}: ParagraphProps) =>  {
     return (
-        <p className={`capitalize text-xs font-medium mt-4 ${className}`}>
+        <p className={`${className} capitalize font-medium mt-4 `}>
             {children}
         </p>
     )

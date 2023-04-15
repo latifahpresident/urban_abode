@@ -29,8 +29,8 @@ const SideBar = ({ links, handleToggle, open }:LinkProps) => {
            
             <ul className='mt-12 pl-5 h-1/2 flex flex-col justify-between'>
             {links.map((link, key) => (
-                <li key={key} className='text-darkGreen uppercase text-sm cursor-pointer last:text-redBrown'>
-                    <NavLink to={`/${link.href}`}>{link.name}</NavLink>
+                <li onClick={handleToggle} key={key} className='text-darkGreen uppercase text-sm cursor-pointer last:text-redBrown'>
+                    <NavLink to={`${link.href}`}>{link.name}</NavLink>
                 </li>
             ))}
             </ul>

@@ -16,43 +16,43 @@ export interface NavLinks {
 export const links: NavLinks[] = [
     {
         name: 'Living Room',
-        href: '/livingroom'
+        href: '/products/Living Room'
     }, 
     {
         name: 'Dining',
-        href: '/dining'
+        href: '/products/Dining'
     }, 
     {
         name: 'Bedroom',
-        href: '/bedroom'
+        href: '/products/Bedroom'
     }, 
     {
         name: 'Office',
-        href: '/office'
+        href: '/products/Office'
     }, 
     {
         name: 'Kids',
-        href: '/kids'
+        href: '/products/Kids'
     }, 
     {
         name: 'Outdoor',
-        href: '/outdoor'
+        href: '/products/Outdoor'
     },
     {
         name: 'Best Sellers',
-        href: '/bestsellers'
+        href: '/products/Best Sellers'
     },
     {
         name: 'Decore & Mirrors',
-        href: '/decore'
+        href: '/products/Decore'
     },
     {
         name: 'Lighting',
-        href: '/lighting'
+        href: '/products/Lighting'
     },
     {
         name: 'Sale',
-        href: '/sale'
+        href: '/products/Sale'
     },
 ]
 
