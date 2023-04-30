@@ -3,9 +3,13 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import {useAppDispatch, useAppSelector } from '../../util/app/hooks'
 import { getProductById } from '../../Store/Actions/Products/Products';
 import ParagraphMediumBold from '../../components/ui/Typography/ParagraphBoldMedium';
+import { CartItem } from '../../Store/user';
+import { addToCart } from '../../Store/Actions/Users/Users';
+
 const Product = () => {
     const dispatch = useAppDispatch()
     const product = useAppSelector(state => state.products.products[0]);
+    const cart_id = useAppSelector(state => state.user.cart?.cartDetails.id)
     const loading = useAppSelector(state => state.ui.notification.loading);
     const [currentImage, setCurrentImage] = useState(0);
     const [value, setValue] = useState(1);
@@ -34,15 +38,18 @@ const Product = () => {
         setCurrentImage(index)
     };
 
-  console.log("SELECTED COLOR", selectedColor)
+    const addProductToCart = (item: CartItem) => {
+        dispatch(addToCart(item))
+        navigate(`/cart/${cart_id}`)
+    };
 
     //TODO MAKE THE DETAILS SECTION INTO A SEPARATE COMPONENT 
     return (
         loading || product === undefined ? <Loading/> : 
         <div className='flex flex-col lg:p-12'>
            <div className='flex flex-col lg:flex-row-reverse lg:justify-between lg:items-start'>
-                <h1 className='lg:hidden capitalize p-4'>{product.title}</h1>
-                <p className='lg:hidden p-4 text-sm text-redAccent font-semibold lg:text-xl lg:my-4'> $ {product.price}</p>
+                <h1 className='lg:hidden capitalize p-4 md:text-2xl'>{product.title}</h1>
+                <p className='lg:hidden p-4 md:text-2xl text-redAccent font-semibold lg:text-xl lg:my-4'> $ {product.price}</p>
 
                 {/* WILL MOVE THIS INTO REUSABLE COMPONENT */}
                 <div className='hidden lg:flex flex-col justify-between h-1/5 overflow-auto w-1/4 items-start p-4'>
@@ -75,14 +82,14 @@ const Product = () => {
                     <div className='flex flex-col md:flex-col-reverse'>
                         <h1 className='font-bold text-md leading-3 my-4'>Free Shipping <span className='font-normal text-xs'>locally to Austin, San Antonio, and Waco</span></h1>
                         <p className='text-xs font-semibold'>Financing available for orders over <span className='text-redAccent'>$50</span> <Link to='/https://www.affirm.com/'><span className='underline'>Learn more</span></Link></p>
-                        <button onClick={() => navigate('/cart')} className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
+                        <button onClick={() => { addProductToCart({cart_id: cart_id, product_id: product.id, quantity: value, title: product.title, price: product.price, color: selectedColor}); navigate(`/cart/${cart_id}`)}} className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
                     </div>
                     
                 </div>
 
                 {/* END OF DETAIL SECTION FOR DESKTOP */}
 
-                <div className='my-4 h-72 w-full md:h-5/6 md:self-center lg:w-1/2 lg:h-2/5  shadow-xl'>
+                <div className='my-4 h-72 w-full md:h-5/6 lg:w-1/2 lg:h-2/5  shadow-xl'>
                     <img className='w-full h-full' src={product.images[currentImage]} alt={product.title}/>
                 </div>
                 <div className='flex lg:flex-col overflow-x-auto my-4 items-center justify-between pr-4 lg:h-[800px]'>
@@ -112,7 +119,7 @@ const Product = () => {
                 <div className='flex flex-col md:flex-col-reverse'>
                     <h1 className='font-bold text-md leading-3 my-4'>Free Shipping <span className='font-normal text-xs'>locally to Austin, San Antonio, and Waco</span></h1>
                     <p className='text-xs font-semibold'>Financing available for orders over <span className='text-redAccent'>$50</span> <Link to='/https://www.affirm.com/'><span className='underline'>Learn more</span></Link></p>
-                    <button onClick={() => navigate('/cart')} className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
+                    <button onClick={() => { addProductToCart({cart_id: cart_id, product_id: product.id, quantity: value, title: product.title, price: product.price, color: selectedColor});  navigate(`/cart/${cart_id}`)} } className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
                 </div>
             </div>
         </div>

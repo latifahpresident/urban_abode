@@ -12,6 +12,8 @@ export const getProducts =  (category: string) => {
              message: 'Sending data!'
             }) 
          )
+
+         console.log('productt category', category)
         const getData = async () => {
             const response = await axios.get(`/products/${category}`)
 

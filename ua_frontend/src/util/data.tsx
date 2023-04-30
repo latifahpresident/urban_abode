@@ -13,22 +13,22 @@ export interface CategoryProps {
     {
         image: Bedroom,
         title: 'Bedroom',
-        href: '/bedroom',
+        href: '/products/Bedroom',
     },
     {
         image: DiningRoom,
         title: 'Dining Room',
-        href: '/diningroom',
+        href: '/products/Dining',
     },
     {
         image: Decor,
         title: 'Decor',
-        href: '/decor',
+        href: '/products/Decor',
     },
     {
         image: Lighting,
         title: 'Lighting',
-        href: '/lighting'
+        href: '/products/Lighting'
     },
   
 ]
@@ -37,27 +37,27 @@ export const topPicks: CategoryProps[] = [
     {
         image: Bedroom,
         title: 'Bedding',
-        href: '/bedroom',
+        href: '/products/Bedroom',
     },
     {
         image: DiningRoom,
         title: 'Kids',
-        href: '/kids',
+        href: '/products/Kids',
     },
     {
         image: Decor,
         title: 'Mirros',
-        href: '/decor',
+        href: '/products/Decor',
     },
     {
         image: Lighting,
         title: 'Office',
-        href: '/office'
+        href: '/products/Office'
     },
     {
         image: Lighting,
         title: 'Pillows',
-        href: '/pillows'
+        href: '/products/Pillows'
     },
 
 ]

@@ -3,7 +3,7 @@ const db = require('./../../dbconfig');
 allUsers = async () => {
     try {
         const result = await db('users')
-        .select('users.uuid', 'users.email', 'users.first_name', 'users.last_name', 'users.cart_id');
+        .select('users.uuid', 'users.email', 'users.first_name', 'users.last_name', 'users.cart_id', 'users.firebase_id');
         return result
 
     } catch (error){
@@ -12,8 +12,9 @@ allUsers = async () => {
 };
 
 addUser = async (user) => { 
+    console.log('user model ******', user.email)
     try {
-        await db('users').insert(user).select('users.uuid');
+        await db('users').insert(user);
         const newly_created_user = await db('users').where({'users.email': user.email}).first();
         if(!newly_created_user) {
             throw new Error(`There was an error creating the new user.`);
@@ -37,6 +38,7 @@ addUser = async (user) => {
 };
 
 getCartItems = async (cart_id) => {
+    console.log("cart id", cart_id)
     const cartItems = await db('cart_item')
     .select(
         'cart_item.cart_id',  
@@ -44,6 +46,7 @@ getCartItems = async (cart_id) => {
         'cart_item.quantity',
         'products.title',
         'products.price',
+        'products.images',
         'cart_item.color'
     )
     .innerJoin('cart', 'cart_item.cart_id', 'cart.id')
@@ -54,24 +57,37 @@ getCartItems = async (cart_id) => {
 
 getUser = async (uuid) => {
     try {
-        const user = await db('users').where({'users.uuid': uuid}).first()
+        const user = await db('users').where({'users.firebase_id': uuid}).first()
+        console.log("user from model*****", user.cart_id)
         if(!user) {
            throw new Error(`There was an error getting that user`)
         } else {
-            const getCart = await db('cart').where({'cart.id': user.cart_id}).first();
+            const cartDetails = await db('cart').where({'cart.id': user.cart_id});
             const cartItems = await getCartItems(user.cart_id);
-           const userData = {
-                ...user,
-                cart: [
-                    getCart,
-                    cartItems,
-                    
-                ]
-            }
-            return userData
+            console.log("cart items", cartItems)
+
+            console.log("use and cart*****", user,
+            {
+             cart: {
+                 cartDetails,
+                 cartItems
+             },
+             
+            })
+
+            return [
+                user,
+               {
+                cart: {
+                    cartDetails,
+                    cartItems
+                },
+                
+               }
+            ]
         }
     } catch (error) {
-        throw new Error(`Error from get user model, ${error}`)
+        throw new Error(`Error from get user model, ${error.message}`)
     }
 };
 

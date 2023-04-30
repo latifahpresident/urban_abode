@@ -10,6 +10,7 @@ import Button from '../../components/ui/Button/Button';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { category } from './../../util/data';
 import { topPicks } from './../../util/data';
+import HeadingLarge from '../../components/ui/Typography/Headings/HeadingLarge';
 const HomeLayout = () => {
 
     // const dispatch = useDispatch();
@@ -54,7 +55,7 @@ const HomeLayout = () => {
                 </div>
              </div>
              <div className='p-4'>
-                <h1 className='text-darkGreen w-9/12 text-md lg:text-7xl leading-none mb-2 lg:mb-10 border-b-2 pb-2 lg:pb-6 w-20 lg:w-80'>Top Picks</h1>
+                <HeadingLarge className='w-20 lg:w-80'>Top Picks</HeadingLarge>
                 <Carousel category={topPicks} show={true}/>
              </div>
 

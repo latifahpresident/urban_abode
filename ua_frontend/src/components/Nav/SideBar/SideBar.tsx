@@ -12,18 +12,20 @@ interface LinkProps {
     links: Item[]
     handleToggle: () => void
     open: Boolean
+    userId: string
+    cartId: number | undefined
 }
 
 //TODO: ADD ANIMATIONS ON CLOSE
-const SideBar = ({ links, handleToggle, open }:LinkProps) => {
+const SideBar = ({ links, handleToggle, open, userId, cartId }:LinkProps) => {
     return (
         <nav className={` ${open ? 'flex' : 'hidden'} flex-col bg-cream w-80 h-screen absolute top-0 animate-slideLeft`}>
             <div className='flex justify-between items-center pt-4'>
                 <button className='pl-4' onClick={handleToggle}><Icon iconName={faX} className="text-darkGreen"/></button>
 
                 <div className='w-1/3 flex justify-around text-lg'>
-                    <Link to='/profile'><Icon iconName={faUser} className='text-darkGreen'/></Link>
-                    <Link to='/cart'><Icon iconName={faShoppingCart} className='text-darkGreen'/></Link>   
+                    <Link to={`/user/${userId}`}><Icon iconName={faUser} className='text-darkGreen'/></Link>
+                    <Link to={`/cart/${cartId}`}><Icon iconName={faShoppingCart} className='text-darkGreen'/></Link>   
                 </div>
             </div>
            

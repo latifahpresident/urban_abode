@@ -13,8 +13,6 @@ export const Products = () => {
        dispatch(getProducts(category || 'all'))
    }, [dispatch, category])
    
-   console.log("params******", category)
-
    return (
        <ProductsList products={products}/>
    )
