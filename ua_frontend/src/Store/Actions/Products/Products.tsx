@@ -9,7 +9,8 @@ export const getProducts =  (category: string) => {
             uiActions.showNotification({
              status: 'Pending',
              title: 'Loading...',
-             message: 'Sending data!'
+             message: 'Sending data!',
+             loading: true
             }) 
          )
 
@@ -32,7 +33,8 @@ export const getProducts =  (category: string) => {
                 uiActions.showNotification({
                  status: 'Success',
                  title: 'Success!',
-                 message: 'Products fetch successfully!'
+                 message: 'Products fetch successfully!',
+                 loading: false
                 }) 
              )
         } catch (error : any) {
@@ -40,7 +42,8 @@ export const getProducts =  (category: string) => {
                 uiActions.showNotification({
                  status: 'Error',
                  title: 'Error!',
-                 message: `Getting products data failed! ${error.message}`
+                 message: `Getting products data failed! ${error.message}`,
+                 loading: false
                 }) 
              ) 
         }

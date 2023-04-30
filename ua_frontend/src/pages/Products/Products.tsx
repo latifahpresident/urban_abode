@@ -2,21 +2,25 @@
 import { useNavigate } from 'react-router-dom';
 import { Products } from '../../Store/products';
 import ParagraphMediumBold from '../../components/ui/Typography/ParagraphBoldMedium';
+import ProductLoader from '../../components/ui/Loaders/ProductLoader';
+import { useAppSelector } from '../../util/app/hooks';
 
-  interface ProdListProps {
+interface ProdListProps {
     products: Products[]
-
 }
 
  export const ProductsList = ({ products } : ProdListProps) => {
-    let navigate = useNavigate() 
+    let navigate = useNavigate();
+    const loading = useAppSelector(state => state.ui.notification.loading);
+
+    if(loading || products.length === 0) return <ProductLoader/>
 
     return (
-        <div className='mt-4 mx-2 h-auto'>
-            <div className='grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3'>
+        <div className='my-4 mx-2 h-auto'>
+            <div className='grid grid-cols-2 gap-x-4 gap-y-12 md:grid-cols-3 border'>
             {products.map((prod, index) => (
-                <div key={index} className='h-84 flex justify-evenly mb-4 items-center flex-col md:h-auto' onClick={() => navigate(`/${prod.id}`)}>
-                    <div  className='h-36 w-full md:h-64 md:w-64 lg:h-[463px] lg:w-[463px] shadow-xl'>
+                <div key={index} className='h-84 flex justify-evenly mb-4 items-center flex-col md:h-auto lg:w-[463px] md:w-64 w-full' onClick={() => navigate(`/${prod.id}`)}>
+                    <div  className='h-36 md:h-64 lg:h-[463px]  shadow-xl'>
                         <img src={prod.images[0]} alt={prod.title} className="h-full w-full"/> 
                     </div>
                     <div className='flex flex-col min-h-[124px] h-48 justify-between w-full lg:w-11/12 mt-8 lg:self-center lg:w-10/12'>
@@ -36,8 +40,12 @@ import ParagraphMediumBold from '../../components/ui/Typography/ParagraphBoldMed
                         </div>
                     </div>
                 </div>
-            ))}  
+ 
+            ))}
+            
+            
             </div>
+ 
         </div>
     )
  }

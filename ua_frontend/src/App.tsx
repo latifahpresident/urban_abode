@@ -33,7 +33,7 @@ const App = () => {
   return (
     <>
       <Header/>
-        <main className='h-screen'>
+        <main className='mb-16'>
           {routes}
         </main>
       <Footer/>

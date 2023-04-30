@@ -4,7 +4,7 @@ import ParagraphBold from '../../components/ui/Typography/ParagraphBold';
 import Hero from './../../assets/homepage_hero.png';
 import Decor from './../../assets/home_decor.jpg';
 import Kids from './../../assets/kids.jpeg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Carousel from '../../components/Carousel/Carousel';
 import Button from '../../components/ui/Button/Button';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ import { category } from './../../util/data';
 import { topPicks } from './../../util/data';
 import HeadingLarge from '../../components/ui/Typography/Headings/HeadingLarge';
 const HomeLayout = () => {
-
+    const navigate = useNavigate();
     // const dispatch = useDispatch();
     // const products = useSelector((state) => state.products);
 
@@ -66,7 +66,7 @@ const HomeLayout = () => {
                 <div className='h-60 lg:h-full bg-creamAccent w-full xl:w-1/2 flex lg:justify-center items-center text-2xl'>
                     <div className='flex pl-4 lg:pl-0 items-center sm:items-start md:items-center justify-between  flex-col h-3/5 lg:h-64'>
                         <h1 className='text-darkGreen w-9/12 text-md lg:text-7xl leading-none mb-2 lg:mb-10'>Check out our pint size deals!</h1>
-                        <Button color='darkGreen' title='Shop Now' className='border border-darkGreen' iconClassName='text-darkGreen' icon={true} iconName={faArrowRight}/>
+                        <Button color='darkGreen' title='Shop Now' className='border border-darkGreen' iconClassName='text-darkGreen' icon={true} iconName={faArrowRight} onClick={() => navigate('/products/Kids')}/>
                     </div>
                 </div>
              </div>
