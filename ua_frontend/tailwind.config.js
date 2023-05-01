@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -16,8 +17,11 @@ module.exports = {
       creamAccent: '#f8e2ba',
       redAccent: '#AF1A30',
       whiteAccent: '#FFFFFF',
-      lightGray: '#F4F4F4'
-
+      lightGray: '#F4F4F4',
+      mediumGray: '#D9D9D9',
+      semiLightGray: '#F8F8F8',
+      slate200: '#e2e8f0',
+      blue300: '#93c5fd',
     },
     extend: {
       fontFamily: {

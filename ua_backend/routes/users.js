@@ -1,11 +1,13 @@
 const express = require('express');
 
 const router = express.Router();
-const userRouter = require('./../controller/users');
+const userRoutes = require('./../controller/users');
+const { auth } = require('./../authorization/auth');
 
-router.get('/all', userRouter.getUsers);
-router.post('/newUser', userRouter.addUser);
-router.get('/:id', userRouter.getUser);
-router.post('/add_to_cart', userRouter.addToCart);
+router.get('/all', userRoutes.getUsers);
+router.post('/newUser', userRoutes.addUser);
+router.get('/:id', auth, userRoutes.getUser);
+router.post('/add_to_cart', userRoutes.addToCart);
+router.get('/cart/:id', userRoutes.getCart);
 
-module.exports = router;
+module.exports = router

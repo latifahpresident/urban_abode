@@ -17,13 +17,11 @@ exports.getProducts = async (req, res) => {
 exports.getProductsByCategory = async (req, res) => {
     try {
         const { category } = req.params;
-        console.log('CATEGORY'), category
         if (category === 'all') {
             const productsData = await Products.allProducts();
             res.status(200).json({products: productsData} )
             res.end()
         } else {
-
             const productsData = await Products.getProductsByCategory(category);
             if(!productsData || productsData.length === 0) {
                 res.status(400).json({message: `No products found.`})

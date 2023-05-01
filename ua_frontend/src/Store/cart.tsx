@@ -1,21 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface Cart {
+    id: number,
+    quantity: number,
+    total: number,
+    user_uuid: string,
+}
+
 interface Items {
-    id: number
-    name: string
+    id?: number
+    title: string
     price: number
     quantity: number
-    totalPrice: number
+    product_id: number
+    cart_id: number
+    color: string
+    images: string | string[]
 }
 
 export interface initialStateProps {
     items: Items[]
-    totalQuantity: number 
+    cart: Cart
 }
 
 const initialState : initialStateProps = {
     items: [],
-    totalQuantity: 0
+    cart: {
+        id: 0, 
+        quantity: 0, 
+        total: 0, 
+        user_uuid: ''
+    }
 }
 
 
@@ -23,36 +38,59 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: initialState,
     reducers: {
+        getCart(state, action) {
+            state.cart = action.payload.cart
+            state.items = action.payload.cart
+        },
         addItemToCart(state, action) {
             const newItem = action.payload
-            const existingItem = state.items.find(item => item.id === newItem.id)
-            state.totalQuantity++
-            if(!existingItem) {
-               state.items.push({
-                id: newItem.id,
-                name: newItem.name,
-                price: newItem.price,
-                quantity: newItem.quantity,
-                totalPrice: newItem.price
-               }) 
-            } else {
-                existingItem.quantity++
-                existingItem.totalPrice = existingItem.totalPrice + newItem.price
-            }
+                const existingItem = state.items.find(item => item.product_id === newItem.product_id)
+                // state.items.quantity++
+                if(!existingItem) {
+                    state.items.push({
+                        cart_id: action.payload.cart_id,
+                        product_id: action.payload.product_id,
+                        quantity: action.payload.quantity,
+                        title: action.payload.title,
+                        price: action.payload.price,
+                        color:action.payload.color,
+                        images:action.payload.images
+                    })
+                } else {
+                    existingItem.quantity = existingItem.quantity + newItem.quantity;
+                    existingItem.price = existingItem.price + newItem.price;
+                }
         },
-        removeItemFromCart(state, action) {
-            const id = action.payload
+        // addItemToCart(state, action) {
+        //     const newItem = action.payload
+        //     const existingItem = state.items.find(item => item.id === newItem.id)
+        //     state.totalQuantity++
+        //     if(!existingItem) {
+        //        state.items.push({
+        //         id: newItem.id,
+        //         name: newItem.name,
+        //         price: newItem.price,
+        //         quantity: newItem.quantity,
+        //         totalPrice: newItem.price
+        //        }) 
+        //     } else {
+        //         existingItem.quantity++
+        //         existingItem.totalPrice = existingItem.totalPrice + newItem.price
+        //     }
+        // },
+        // removeItemFromCart(state, action) {
+        //     const id = action.payload
 
-            const existingItem = state.items.find(item => item.id === id)
-            state.totalQuantity--
-            if(existingItem === undefined) return //add some error handling here
-            if( existingItem.quantity === 1) {
-                state.items = state.items.filter(item => item.id !== id) //keep all id's that don't match the payload
-            } else {
-                existingItem.quantity--
-                existingItem.totalPrice = existingItem.totalPrice - existingItem.price
-            }
-        }
+        //     const existingItem = state.items.find(item => item.id === id)
+        //     // state.totalQuantity--
+        //     if(existingItem === undefined) return //add some error handling here
+        //     if( existingItem.quantity === 1) {
+        //         state.items = state.items.filter(item => item.id !== id) //keep all id's that don't match the payload
+        //     } else {
+        //         existingItem.quantity - new
+        //         existingItem.totalPrice = existingItem.totalPrice - existingItem.price
+        //     }
+        // }
     }
 });
 
