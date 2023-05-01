@@ -7,7 +7,7 @@ export interface CartItem {
     title: string
     price: number
     color: string
-    images?: string[]
+    images?: string[] | string
 };
 
 export interface CartDetails {
@@ -79,30 +79,38 @@ const userSlice = createSlice({
     name: 'user',
     initialState: initialState,
     reducers: {
-        addProduct(state, action) {
-            state.cart?.cartItems.push({
-                cart_id: action.payload.cart_id,
-                product_id: action.payload.product_id,
-                quantity: action.payload.quantity,
-                title: action.payload.title,
-                price: action.payload.price,
-                color:action.payload.color,
-                images:action.payload.images
-            })
-        },
+        // addProduct(state, action) {
+        //     const newItem = action.payload
+        //         const existingItem = state.cart?.cartItems.find(item => item.product_id === newItem.product_id)
+        //         state.cart!.cartDetails.quantity++
+        //         if(!existingItem) {
+        //             state.cart?.cartItems.push({
+        //                 cart_id: action.payload.cart_id,
+        //                     product_id: action.payload.product_id,
+        //                     quantity: action.payload.quantity,
+        //                     title: action.payload.title,
+        //                     price: action.payload.price,
+        //                     color:action.payload.color,
+        //                     images:action.payload.images
+        //             })
+        //         } else {
+        //             existingItem.quantity = existingItem.quantity + newItem.quantity;
+        //             existingItem.price = existingItem.price + newItem.price;
+        //         }
+        // },
         
         getUser(state, action) {
             state.user =  action.payload.user
-            state.cart = 
-                {
-                    cartDetails: {
-                        user_uuid: action.payload.cart.cartDetails[0].user_uuid,
-                        id:  action.payload.cart.cartDetails[0].id,
-                        total: action.payload.cart.cartDetails[0].total,
-                        quantity: action.payload.cart.cartDetails[0].quanity,
-                    },
-                    cartItems: action.payload.cart.cartItems
-                }
+            // state.cart = 
+            //     {
+            //         cartDetails: {
+            //             user_uuid: action.payload.cart.cartDetails[0].user_uuid,
+            //             id:  action.payload.cart.cartDetails[0].id,
+            //             total: action.payload.cart.cartDetails[0].total,
+            //             quantity: action.payload.cart.cartDetails[0].quantity
+            //         },
+            //         cartItems: action.payload.cart.cartItems
+            //     }
         },
 
         addUser(state, action) {

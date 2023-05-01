@@ -10,11 +10,9 @@ export function useAuth() {
     const [currentUser, setCurrentUser] = useState< User | null>(null);
 
     useEffect(() => {
-        console.log('rendering on auth state change')
         const authorize = async () => {
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
-                    console.log("firebase user", user)
                     const token = await user.getIdToken()
                     dispatch(setUser(user.uid))
                     setCurrentUser(user)

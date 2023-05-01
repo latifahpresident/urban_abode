@@ -5,6 +5,7 @@ import { uiActions } from '../../ui';
 import { auth } from '../../../util/firebase_config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { NewUser } from '../../../pages/Authentication/Signup/Signup';
+import { cartActions } from '../../cart';
 
 export const setUser = (firebase_id: string) => {
     return async (dispatch: Dispatch) => {
@@ -70,7 +71,6 @@ export const getUserByUUId = (id: string | undefined) => {
         const getUser = async () => {
             if(id) {
                 const response = await axios.get(`/users/${id}`) 
-
                 if(response.status !== 200) {
                     throw new Error (`Error getting that user`)
                 } else {
@@ -79,14 +79,20 @@ export const getUserByUUId = (id: string | undefined) => {
             }
         }
         try {
-           const userData = await getUser()
-           dispatch(usersActions.getUser({
-                user: userData.user[0],
-                cart: userData.user[1].cart,
-                error: false,
-                loading: false,
-                errorMessage: ''
-            }))
+           const userData = await getUser();
+           if (userData) {
+            dispatch(usersActions.getUser({
+                 user: userData.user[0],
+                 error: false,
+                 loading: false,
+                 errorMessage: ''
+             }))
+             dispatch(cartActions.getCart({
+                 cart: userData.user[1].cart.cartDetails[0],
+                 items: userData.user[1].cart.cartItems
+             }))
+           }
+          
            
         } catch (error: any) {
             dispatch(
@@ -96,7 +102,7 @@ export const getUserByUUId = (id: string | undefined) => {
                     message: `Getting user data failed! ${error.message}`
                 })
             )
-            throw new Error(`Error getting the user, ${error.message}`)
+            throw new Error(`Error getting the user, ${error}`)
         }
     }
 }
@@ -107,28 +113,24 @@ export const addToCart = (item : CartItem) => {
         dispatch(uiActions.showNotification({
             status: 'Pending',
             title: 'Loading...',
-            message: 'Adding item to cart!'
+            message: 'Adding item to cart!',
+            loading: true
         }))
-
-        // const addItem = async () => {
-        //     if(item) {
-        //         const response = await axios.post(`/users/add_to_cart`, item) 
-
-        //         if(response.status !== 201) {
-        //             throw new Error (`Error adding item to cart`)
-        //         } 
-        //     }
-        // }
         try {
 
             if(item) {
-                const response = await axios.post(`/users/add_to_cart`, item) 
+                const response = await axios.post(`/users/add_to_cart`, {cart_id: item.cart_id, title: item.title, price: item.price, product_id: item.product_id, quantity: item.quantity, color: item.color}) 
 
                 if(response.status !== 201) {
-                    throw new Error (`Error adding item to cart`)
+                    throw new Error (`Error adding item to cart, ${response.data.message}`)
                 } else {
-                    dispatch(usersActions.addProduct(item))
-
+                    dispatch(cartActions.addItemToCart(item))
+                    dispatch(uiActions.showNotification({
+                        status: 'Success',
+                        title: 'Success',
+                        message: 'Item added to cart',
+                        loading: false
+                    }))
                 }
             }
 
@@ -138,61 +140,13 @@ export const addToCart = (item : CartItem) => {
                 uiActions.showNotification({
                     status: 'Error',
                     title: 'Error!',
-                    message: `Getting user data failed! ${error.message}`
+                    message: `${error.response.data.message}`,
+                    loading: false
                 })
             )
-            throw new Error(`Error getting the user, ${error.message}`)
+            throw new Error(`${error.response.data.message}`)
         }
     }
-
-
-
-
-
-
-    // return async (dispatch: Dispatch) => {
-    //     dispatch(
-    //         uiActions.showNotification({
-    //             status: 'Pending',
-    //             title: 'Loading...',
-    //             message: 'Sending data!'
-    //         })
-    //     )
-
-    //     console.log("ITEM", item)
-    //     const addItem = async () => {
-    //         const response = await axios.post(`/users/add_to_cart`, item)
-    //         console.log('response', response)
-    //         if (response.status !== 200 ) {
-    //             throw new Error(`Error adding cart please try again`)
-    //         }
-    //         return response.data
-    //     }
-
-    //     try {
-    //         const newItem = await addItem();
-
-    //         console.log(newItem)
-
-    //         dispatch(usersActions.addProduct(item))
-    //         dispatch(uiActions.showNotification({
-    //             status: 'Success',
-    //             title: 'Success!',
-    //             message: 'Items added successfully!',
-    //             loading: false
-
-    //         }))
-    //     } catch(error: any) {
-    //         dispatch(uiActions.showNotification({
-    //             status: 'Error',
-    //             title: 'Error!',
-    //             message: `Getting item data failed! ${error.message}`
-    //         }))
-    //         console.log("error fromad to cart", error)
-    //         throw new Error(`Error adding product to cart`)
-            
-    //     }
-    // }
 };
 
 export const addUser = (newuser: NewUser) => {
@@ -207,7 +161,6 @@ export const addUser = (newuser: NewUser) => {
             const userCredential = await createUserWithEmailAndPassword(auth, newuser.email , newuser.password);
             const user = userCredential.user
 
-            console.log("USER CREDENTIALS", user)
             if(!user) {
                 throw new Error(`Error authenticatiing user`)
             } else {
@@ -220,7 +173,6 @@ export const addUser = (newuser: NewUser) => {
             const response = await axios.post(`/users/newUser`,{ data })
     
             if(response.status === 201) {
-                console.log('returned new user', data)
                 return data
             }
             } 
@@ -228,8 +180,6 @@ export const addUser = (newuser: NewUser) => {
 
         try {
             const newUserData = await newUser();
-            console.log('new user data', newUserData)
-
             dispatch(usersActions.addUser(newUserData));
             dispatch(uiActions.showNotification({
                 status: 'Success',

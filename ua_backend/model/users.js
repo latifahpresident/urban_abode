@@ -12,7 +12,6 @@ allUsers = async () => {
 };
 
 addUser = async (user) => { 
-    console.log('user model ******', user.email)
     try {
         await db('users').insert(user);
         const newly_created_user = await db('users').where({'users.email': user.email}).first();
@@ -38,9 +37,9 @@ addUser = async (user) => {
 };
 
 getCartItems = async (cart_id) => {
-    console.log("cart id", cart_id)
     const cartItems = await db('cart_item')
     .select(
+        'cart_item.id',
         'cart_item.cart_id',  
         'cart_item.product_id',
         'cart_item.quantity',
@@ -58,23 +57,11 @@ getCartItems = async (cart_id) => {
 getUser = async (uuid) => {
     try {
         const user = await db('users').where({'users.firebase_id': uuid}).first()
-        console.log("user from model*****", user.cart_id)
         if(!user) {
            throw new Error(`There was an error getting that user`)
         } else {
             const cartDetails = await db('cart').where({'cart.id': user.cart_id});
             const cartItems = await getCartItems(user.cart_id);
-            console.log("cart items", cartItems)
-
-            console.log("use and cart*****", user,
-            {
-             cart: {
-                 cartDetails,
-                 cartItems
-             },
-             
-            })
-
             return [
                 user,
                {
@@ -95,7 +82,7 @@ const calculateTotals = (cartItems) => {
     let totalQuantity = 0
     let total = 0
     cartItems.forEach(element => {
-      totalQuantity+= element.quantity
+      totalQuantity += element.quantity
       total += element.quantity * element.price
     })
   
@@ -103,22 +90,35 @@ const calculateTotals = (cartItems) => {
   };
 
 addToCart = async (item) => {
+    
     try {
-        await db('cart_item').insert(item);
-        const cartItems =await getCartItems(item.cart_id);
+        //get the users cart_items by the item.cart_id
+        //use arr.find to see if the item.name is present
+        //if no existing item then add to the db
+        //else update the existing items 
+        const cartItems = await getCartItems(item.cart_id);
+        const existingItem = cartItems.find(cartItem => cartItem.product_id === item.product_id);
+        if(!existingItem) {
+            await db('cart_item').insert(item);
+        } else {
+            await db('cart_item').where({'cart_item.id': existingItem.id}).update({quantity: existingItem.quantity + item.quantity})
+        }
+      
         const totals = calculateTotals(cartItems);
         const updateCart = await db('cart').where({'cart.id': item.cart_id}).update({quantity: totals.totalQuantity, total: totals.total});
         return updateCart
     } catch (error) {
-        throw new Error(`Error from add to cart ${error}`)
+        throw new Error(`Error from add to cart model ${error}`)
     }
 };
+
 
 module.exports = {
     allUsers,
     addUser,
     getUser,
     addToCart,
+    getCartItems
 };
 
 // //User = {

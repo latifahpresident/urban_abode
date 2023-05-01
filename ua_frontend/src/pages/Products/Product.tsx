@@ -9,7 +9,7 @@ import { addToCart } from '../../Store/Actions/Users/Users';
 const Product = () => {
     const dispatch = useAppDispatch()
     const product = useAppSelector(state => state.products.products[0]);
-    const cart_id = useAppSelector(state => state.user.cart?.cartDetails.id)
+    const cart_id = useAppSelector(state => state.user.user.cart_id)
     const loading = useAppSelector(state => state.ui.notification.loading);
     const [currentImage, setCurrentImage] = useState(0);
     const [value, setValue] = useState(1);
@@ -18,8 +18,6 @@ const Product = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-   
-  ;
 
     useEffect(() => {
         dispatch(getProductById (Number(id)))
@@ -82,7 +80,7 @@ const Product = () => {
                     <div className='flex flex-col md:flex-col-reverse'>
                         <h1 className='font-bold text-md leading-3 my-4'>Free Shipping <span className='font-normal text-xs'>locally to Austin, San Antonio, and Waco</span></h1>
                         <p className='text-xs font-semibold'>Financing available for orders over <span className='text-redAccent'>$50</span> <Link to='/https://www.affirm.com/'><span className='underline'>Learn more</span></Link></p>
-                        <button onClick={() => { addProductToCart({cart_id: cart_id, product_id: product.id, quantity: value, title: product.title, price: product.price, color: selectedColor}); navigate(`/cart/${cart_id}`)}} className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
+                        <button onClick={() => { addProductToCart({cart_id: cart_id, product_id: product.id, quantity: value, title: product.title, price: product.price, color: selectedColor, images: product.images[0]}); navigate(`/cart/${cart_id}`)}} className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
                     </div>
                     
                 </div>
@@ -119,7 +117,7 @@ const Product = () => {
                 <div className='flex flex-col md:flex-col-reverse'>
                     <h1 className='font-bold text-md leading-3 my-4'>Free Shipping <span className='font-normal text-xs'>locally to Austin, San Antonio, and Waco</span></h1>
                     <p className='text-xs font-semibold'>Financing available for orders over <span className='text-redAccent'>$50</span> <Link to='/https://www.affirm.com/'><span className='underline'>Learn more</span></Link></p>
-                    <button onClick={() => { addProductToCart({cart_id: cart_id, product_id: product.id, quantity: value, title: product.title, price: product.price, color: selectedColor});  navigate(`/cart/${cart_id}`)} } className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
+                    <button onClick={() => { addProductToCart({cart_id: cart_id, product_id: product.id, quantity: value, title: product.title, price: product.price, color: selectedColor, images: product.images[0]});  navigate(`/cart/${cart_id}`)} } className='font-bold w-full bg-redAccent text-whiteAccent my-4 h-12'>Add To Cart</button> 
                 </div>
             </div>
         </div>

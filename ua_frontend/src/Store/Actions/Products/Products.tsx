@@ -13,12 +13,17 @@ export const getProducts =  (category: string) => {
              loading: true
             }) 
          )
-
-         console.log('productt category', category)
         const getData = async () => {
             const response = await axios.get(`/products/${category}`)
-
-            if(response.status !== 200) {
+            if(response.status === 400) {
+                dispatch(
+                    uiActions.showNotification({
+                     status: 'Error',
+                     title: 'Error!',
+                     message: `No products found ${response.data.message}`,
+                     loading: false
+                    }) 
+                 ) 
                 throw new Error(response.data.message)
             }
 
@@ -42,7 +47,7 @@ export const getProducts =  (category: string) => {
                 uiActions.showNotification({
                  status: 'Error',
                  title: 'Error!',
-                 message: `Getting products data failed! ${error.message}`,
+                 message: `Getting products data failed! ${error.response.data.message}`,
                  loading: false
                 }) 
              ) 
@@ -68,15 +73,12 @@ export const getProductById =  (id: number) => {
             if(response.status !== 200) {
                 throw new Error(response.data.message)
             }
-            console.log("response from get by id", response.data.product)
             const data = response.data.product
             return data
         }
 
         try {
             const productData = await getData()
-            console.log("response from get by id", productData[0].quantity            )
-
             dispatch(productsActions.getProductData(productData))
             dispatch(
                 uiActions.showNotification({

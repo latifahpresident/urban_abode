@@ -17,8 +17,6 @@ exports.getUsers = async (req, res) => {
 exports.addUser = async (req, res) => {
     try {
         const { email, first_name, last_name, firebase_id } = req.body.data
-
-        console.log('NEW USER FIREBASE ID', firebase_id)
         if(!email || !first_name || !last_name || !firebase_id ) {
             res.status(400).json({message: `Please add all required fields`})
         } else {
@@ -40,8 +38,6 @@ exports.addUser = async (req, res) => {
 exports.getUser = async (req, res ) => {
     try {
         const { id } = req.params;
-        console.log('UID from frontend ID', id)
-
         if (!id) {
             res.status(404).json({message: `There was an error please try again`}) 
         }
@@ -49,7 +45,6 @@ exports.getUser = async (req, res ) => {
         if (!user) {
             res.status(404).json({message: `User not found`})
         } else {
-            console.log('USER CONTROLLER', user)
             res.status(200).json({user})
         }
     } catch (error) {
@@ -60,11 +55,25 @@ exports.getUser = async (req, res ) => {
 exports.addToCart = async (req, res) => {
     try {
         const { cart_id, product_id, quantity, color } = req.body;
-        console.log('ADDED PRODUCT', cart_id, product_id, quantity, color)
         await Users.addToCart({cart_id, product_id, quantity, color});
 
         res.status(201).json({message: `Item added to cart`})
     } catch (error) {
         res.status(500).json({message: `Error from add to cart ${error}`})
+    }
+}
+
+exports.getCart = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if(!id) {
+            res.status(404).json({message: 'Cart not found'})
+        } else {
+            const cart = await Users.getCartItems(id);
+            res.status(200).json({cart})
+            
+        }
+    } catch (error) {
+        
     }
 }

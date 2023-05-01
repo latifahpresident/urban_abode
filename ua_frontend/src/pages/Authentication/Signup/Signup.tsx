@@ -33,7 +33,7 @@ const Signup = () => {
 
             navigate(`/user/${currentUser?.uid}`)
         } catch (error) {
-            console.log(`error, ${error}`)
+            throw new Error(`${error}`)
         }
     };
 

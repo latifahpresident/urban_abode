@@ -10,7 +10,6 @@ getProductsByCategory = async (category) => {
         const products = await db('products')
         .select('products.id', 'products.title', 'products.images', 'products.price', 'products.description', 'products.category_name', 'products.quantity', 'products.category_name', 'products.colors')
         .where({'products.category_name': category})
-        console.lof('PRODUCTS*****', products)
         return products
     } catch (error) {
         throw new Error(`Error from get products by id model, ${error}`)
