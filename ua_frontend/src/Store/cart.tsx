@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface Cart {
     id: number,
@@ -7,7 +7,7 @@ interface Cart {
     user_uuid: string,
 }
 
-interface Items {
+export interface Items {
     id?: number
     title: string
     price: number
@@ -18,19 +18,20 @@ interface Items {
     images: string | string[]
 }
 
-export interface initialStateProps {
+export interface InitialStateProps {
     items: Items[]
     cart: Cart
 }
 
-const initialState : initialStateProps = {
+const initialState : InitialStateProps = {
     items: [],
     cart: {
         id: 0, 
         quantity: 0, 
         total: 0, 
         user_uuid: ''
-    }
+    },
+    
 }
 
 
@@ -40,9 +41,9 @@ const cartSlice = createSlice({
     reducers: {
         getCart(state, action) {
             state.cart = action.payload.cart
-            state.items = action.payload.cart
+            state.items = action.payload.items
         },
-        addItemToCart(state, action) {
+        addItemToCart(state, action: PayloadAction<Items>) {
             const newItem = action.payload
                 const existingItem = state.items.find(item => item.product_id === newItem.product_id)
                 // state.items.quantity++
@@ -61,6 +62,16 @@ const cartSlice = createSlice({
                     existingItem.price = existingItem.price + newItem.price;
                 }
         },
+        clearCart(state) {
+            state.cart =  {
+                id: 0, 
+                quantity: 0, 
+                total: 0, 
+                user_uuid: ''
+            }
+
+            state.items = []
+        }
         // addItemToCart(state, action) {
         //     const newItem = action.payload
         //     const existingItem = state.items.find(item => item.id === newItem.id)

@@ -1,11 +1,11 @@
-import { CartItem, usersActions } from './../../user';
+import { usersActions } from './../../user';
 import axios from './../../../util/axiosInstance';
 import { Dispatch } from 'redux';
 import { uiActions } from '../../ui';
 import { auth } from '../../../util/firebase_config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { NewUser } from '../../../pages/Authentication/Signup/Signup';
-import { cartActions } from '../../cart';
+import { Items, cartActions } from '../../cart';
 
 export const setUser = (firebase_id: string) => {
     return async (dispatch: Dispatch) => {
@@ -53,6 +53,7 @@ export const logout = () => {
         try {
             await signOut(auth)
             dispatch(usersActions.logOut())
+            dispatch(cartActions.clearCart())
         } catch (error) {
            throw new Error(`Error logging out, ${error}`);
         }
@@ -99,15 +100,15 @@ export const getUserByUUId = (id: string | undefined) => {
                 uiActions.showNotification({
                     status: 'Error',
                     title: 'Error!',
-                    message: `Getting user data failed! ${error.message}`
+                    message: `Getting user data failed! ${error.response.data.message}`
                 })
             )
-            throw new Error(`Error getting the user, ${error}`)
+            throw new Error(`Error getting the user, ${error.response.data.message}`)
         }
     }
 }
 
-export const addToCart = (item : CartItem) => {
+export const addToCart = (item : Items) => {
 
     return async (dispatch: Dispatch) => {
         dispatch(uiActions.showNotification({

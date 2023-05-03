@@ -3,13 +3,13 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import {useAppDispatch, useAppSelector } from '../../util/app/hooks'
 import { getProductById } from '../../Store/Actions/Products/Products';
 import ParagraphMediumBold from '../../components/ui/Typography/ParagraphBoldMedium';
-import { CartItem } from '../../Store/user';
 import { addToCart } from '../../Store/Actions/Users/Users';
+import { Items } from '../../Store/cart';
 
 const Product = () => {
     const dispatch = useAppDispatch()
     const product = useAppSelector(state => state.products.products[0]);
-    const cart_id = useAppSelector(state => state.user.user.cart_id)
+    const cart_id = useAppSelector(state => state.cartSlice.cart.id)
     const loading = useAppSelector(state => state.ui.notification.loading);
     const [currentImage, setCurrentImage] = useState(0);
     const [value, setValue] = useState(1);
@@ -36,7 +36,7 @@ const Product = () => {
         setCurrentImage(index)
     };
 
-    const addProductToCart = (item: CartItem) => {
+    const addProductToCart = (item: Items) => {
         dispatch(addToCart(item))
         navigate(`/cart/${cart_id}`)
     };
