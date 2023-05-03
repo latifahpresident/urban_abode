@@ -1,4 +1,6 @@
 export interface TypographyProps {
-    children: string
+    children: string 
     className?: string
+    element?: HTMLElement | string
+    
 }

@@ -27,7 +27,8 @@ export const getCart = (id: number) => {
             const cartData = await getCartItems();
             if(cartData) {
                 dispatch(cartActions.getCart({
-                    cart: cartData
+                    cart: cartData[1],
+                    items: cartData[0]
                 }))
 
                 dispatch(

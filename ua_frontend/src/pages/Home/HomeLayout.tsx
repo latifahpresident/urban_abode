@@ -55,7 +55,7 @@ const HomeLayout = () => {
                 </div>
              </div>
              <div className='p-4'>
-                <HeadingLarge className='w-20 lg:w-80'>Top Picks</HeadingLarge>
+                <HeadingLarge className='w-20 lg:w-80 border-b-2 pb-2'>Top Picks</HeadingLarge>
                 <Carousel category={topPicks} show={true}/>
              </div>
 

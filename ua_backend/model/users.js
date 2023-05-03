@@ -36,7 +36,20 @@ addUser = async (user) => {
     }
 };
 
+const calculateTotals = (cartItems) => {
+    let quantity = 0
+    let total = 0
+    if (cartItems) {
+        cartItems.forEach(element => {
+        quantity += element.quantity
+          total += element.quantity * element.price
+        })
+    }
+    return { quantity, total }
+  };
+
 getCartItems = async (cart_id) => {
+    const cartDetails = await db('cart').where({'cart.id': cart_id});
     const cartItems = await db('cart_item')
     .select(
         'cart_item.id',
@@ -51,7 +64,8 @@ getCartItems = async (cart_id) => {
     .innerJoin('cart', 'cart_item.cart_id', 'cart.id')
     .innerJoin('products', 'cart_item.product_id', 'products.id')
     .where({'cart_item.cart_id': cart_id});
-    return cartItems
+    const total = calculateTotals(cartItems);
+    return [cartItems, {...cartDetails[0], ...total}]
 };
 
 getUser = async (uuid) => {
@@ -78,35 +92,23 @@ getUser = async (uuid) => {
     }
 };
 
-const calculateTotals = (cartItems) => {
-    let totalQuantity = 0
-    let total = 0
-    cartItems.forEach(element => {
-      totalQuantity += element.quantity
-      total += element.quantity * element.price
-    })
-  
-    return { totalQuantity, total }
-  };
-
 addToCart = async (item) => {
-    
     try {
-        //get the users cart_items by the item.cart_id
-        //use arr.find to see if the item.name is present
-        //if no existing item then add to the db
-        //else update the existing items 
         const cartItems = await getCartItems(item.cart_id);
-        const existingItem = cartItems.find(cartItem => cartItem.product_id === item.product_id);
-        if(!existingItem) {
-            await db('cart_item').insert(item);
-        } else {
-            await db('cart_item').where({'cart_item.id': existingItem.id}).update({quantity: existingItem.quantity + item.quantity})
+
+        if(cartItems) {
+            const existingItem = cartItems[0].find(cartItem => cartItem.product_id === item.product_id);    
+            if(!existingItem) {
+                await db('cart_item').insert(item);
+            } else {
+                await db('cart_item').where({'cart_item.id': existingItem.id}).update({quantity: existingItem.quantity + item.quantity})
+            }
+          
+            const totals = calculateTotals(cartItems);
+            const updateCart = await db('cart').where({'cart.id': item.cart_id}).update({quantity: totals.totalQuantity, total: totals.total});
+            return updateCart
         }
-      
-        const totals = calculateTotals(cartItems);
-        const updateCart = await db('cart').where({'cart.id': item.cart_id}).update({quantity: totals.totalQuantity, total: totals.total});
-        return updateCart
+        
     } catch (error) {
         throw new Error(`Error from add to cart model ${error}`)
     }

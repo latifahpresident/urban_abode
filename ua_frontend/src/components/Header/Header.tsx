@@ -68,8 +68,8 @@ const Header = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const userId = useAppSelector(state => state.user.user)
-    const cartItems = useAppSelector(state => state.cartSlice.items)
     const loggedIn = useAppSelector(state => state.user.loggedIn)
+    const cartQuantity = useAppSelector(state => state.cartSlice.cart.quantity)
 
     const handleToggle = () => {
         setToggle(!toggle)
@@ -77,10 +77,9 @@ const Header = () => {
 
     const handleLogout = () => {
         dispatch(logout())
-        //navigate('/')
     }
     
-    const showBadge =  cartItems && cartItems.length > 0 
+    const showBadge =  cartQuantity > 0 
     //TODO: IMPROVE NAVIGATION CONDITIONAL STYLING
     //TODO: REMOVE HREF FROM THE LINKS ARRAY. WE WANT TO SEND THE CATEGORY TO THE BACKEND WITH A SPACE.
     return (
@@ -103,7 +102,7 @@ const Header = () => {
                                     <Icon iconName={faHeart} className={iconClassNames}/>
                             </Link>
                             <div className='relative'>
-                                { showBadge && <div className='border rounded-full h-4 w-4 bg-redAccent absolute text-xs text-cream font-medium flex justify-center items-center -top-2 -right-2'>{cartItems.length}</div> }
+                                { showBadge && <div className='border rounded-full h-4 w-4 bg-redAccent absolute text-xs text-cream font-medium flex justify-center items-center -top-2 -right-2'>{cartQuantity}</div> }
                                 <Link to={`/cart/${userId.cart_id}`}>
                                         <Icon iconName={faShoppingCart} className={iconClassNames}/>
                                 </Link>
@@ -115,7 +114,7 @@ const Header = () => {
                     </div>
                 </header>
                 <Nav links={links}/>
-                <SideBar userId={userId.firebase_id} cartId={userId.cart_id} links={links} handleToggle={handleToggle} open={toggle} />
+                <SideBar userId={userId.firebase_id} cartId={userId.cart_id} links={links} handleToggle={handleToggle} open={toggle} loggedIn={loggedIn} handleLogout={handleLogout} />
             </div>
         </>
     )

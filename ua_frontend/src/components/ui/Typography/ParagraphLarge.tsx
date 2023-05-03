@@ -1,12 +1,9 @@
-interface ParagraphProps {
-    children: string
-    color: string
+import { TypographyProps } from './types';
+
+const ParagraphLarge = ({children}: TypographyProps) => {
+    return (
+        <p className='text-lg'>{children}</p>
+    )
 }
 
-const ParagraphLarge = ({children, color}: ParagraphProps) => {
-    return (
-        <p className={`text-${color} text-2xl self-end`}>{children}</p>
-    )
-};
-
-export default ParagraphLarge
+export default ParagraphLarge;
